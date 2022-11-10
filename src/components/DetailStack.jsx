@@ -1,22 +1,15 @@
 import { Button, StyleSheet, Text, View } from "react-native"
 import * as React from "react"
 
-export function DetailsScreen({ route, navigation }) {
-	const { itemId, otherParam } = route.params
+export function DetailsScreen({ navigation }) {
 	return (
 		<View
 			style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
 		>
 			<Text>Details Screen</Text>
-			<Text>itemId: {JSON.stringify(itemId)}</Text>
-			<Text>otherParam: {JSON.stringify(otherParam)}</Text>
 			<Button
 				title="Go to Details... again"
-				onPress={() =>
-					navigation.push("Details", {
-						itemId: Math.floor(Math.random() * 100),
-					})
-				}
+				onPress={() => navigation.navigate("Details")}
 			/>
 			<Button
 				title="Go to Home"
