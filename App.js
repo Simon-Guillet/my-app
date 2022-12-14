@@ -3,11 +3,21 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { HomeScreen } from "./src/components/HomeStack"
 import { DetailsScreen } from "./src/components/DetailStack"
+import { EpisodesScreen } from "./src/components/EpisodesStack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
+
+function HomeStackScreen() {
+	return (
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
+			<Stack.Screen name="List" component={HomeScreen} />
+			<Stack.Screen name="Details" component={DetailsScreen} />
+		</Stack.Navigator>
+	)
+}
 
 function App() {
 	return (
@@ -17,9 +27,9 @@ function App() {
 					tabBarIcon: ({ focused, color, size }) => {
 						let iconName
 
-						if (route.name === "Home") {
-							iconName = focused ? "ios-home" : "ios-home-outline"
-						} else if (route.name === "Details") {
+						if (route.name === "Characters") {
+							iconName = focused ? "ios-people" : "ios-people-outline"
+						} else if (route.name === "Episodes") {
 							iconName = focused ? "ios-list" : "ios-list-outline"
 						}
 
@@ -36,12 +46,8 @@ function App() {
 					tabBarInactiveTintColor: "gray",
 				})}
 			>
-				<Tab.Screen
-					name="Home"
-					component={HomeScreen}
-					options={{ title: "My home" }}
-				/>
-				<Tab.Screen name="Details" component={DetailsScreen} />
+				<Tab.Screen name="Characters" component={HomeStackScreen} />
+				<Tab.Screen name="Episodes" component={EpisodesScreen} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	)

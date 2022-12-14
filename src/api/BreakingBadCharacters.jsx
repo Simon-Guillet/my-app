@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
-export function getData() {
+export function getCharacters() {
 	const [data, setData] = useState([])
 
 	const getAPIData = async () => {
@@ -10,11 +10,9 @@ export function getData() {
 			)
 			const json = await response.json()
 			setData(json)
-			console.log(json[0])
 		} catch (error) {
 			console.error(error)
-		} finally {
-			setLoading(false)
+			throw error
 		}
 	}
 
@@ -22,6 +20,5 @@ export function getData() {
 		setData(getAPIData())
 	}, [])
 
-	console.log(data)
 	return data
 }
