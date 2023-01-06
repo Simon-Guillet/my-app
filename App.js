@@ -27,8 +27,8 @@ function App() {
 					tabBarIcon: ({ focused, color, size }) => {
 						let iconName
 
-						if (route.name === "Characters") {
-							iconName = focused ? "ios-people" : "ios-people-outline"
+						if (route.name === "Movies") {
+							iconName = focused ? "ios-film" : "ios-film-outline"
 						} else if (route.name === "Episodes") {
 							iconName = focused ? "ios-list" : "ios-list-outline"
 						}
@@ -46,7 +46,7 @@ function App() {
 					tabBarInactiveTintColor: "gray",
 				})}
 			>
-				<Tab.Screen name="Characters" component={HomeStackScreen} />
+				<Tab.Screen name="Movies" component={HomeStackScreen} />
 				<Tab.Screen name="Episodes" component={EpisodesScreen} />
 			</Tab.Navigator>
 		</NavigationContainer>
