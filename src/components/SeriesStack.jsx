@@ -8,16 +8,16 @@ import {
 	ActivityIndicator,
 } from "react-native"
 import React, { useEffect, useState } from "react"
-import { getMovies } from "../api/TmdbPopMov"
+import { getSeries } from "../api/TmdbPopSer"
 
-export function HomeScreen({ navigation }) {
+export function SeriesScreen({ navigation }) {
 	const [list, setList] = useState([])
 	const [page, setPage] = useState(1)
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
 
 	useEffect(() => {
-		getMovies(page)
+		getSeries(page)
 			.then((data) => {
 				setList((prevList) => [...prevList, ...data.results])
 				setLoading(false)
@@ -34,7 +34,7 @@ export function HomeScreen({ navigation }) {
 	}
 
 	if (error) {
-		return <Text>Une erreur est survenue</Text>
+		return <Text>An error has occurred</Text>
 	}
 
 	return (
@@ -49,9 +49,9 @@ export function HomeScreen({ navigation }) {
 					<Pressable
 						style={styles.card}
 						onPress={() => {
-							navigation.navigate("Movies", {
-								screen: "Details",
-								params: { movie: item },
+							navigation.navigate("Series", {
+								screen: "DetailsSeries",
+								params: { serie: item },
 							})
 						}}
 					>
@@ -64,12 +64,14 @@ export function HomeScreen({ navigation }) {
 							style={styles.image}
 						/>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>{item.title}</Text>
+							<Text style={styles.title}>{item.name}</Text>
 						</View>
 					</Pressable>
 				)}
 				ListFooterComponent={
-					loading ? <ActivityIndicator size="large" /> : null
+					loading ? (
+						<ActivityIndicator size="large" color="#0000ff" />
+					) : null
 				}
 				keyExtractor={(item) => item.id.toString()}
 			/>

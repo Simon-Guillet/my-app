@@ -1,25 +1,25 @@
 import { Button, StyleSheet, Text, View, Image, ScrollView } from "react-native"
 import * as React from "react"
 
-export function DetailsScreen({ route, navigation }) {
-	const { movie } = route.params
+export function DetailsSeriesScreen({ route, navigation }) {
+	const { serie } = route.params
 	return (
 		<View style={styles.container}>
 			<Image
 				source={{
 					uri:
 						"https://image.tmdb.org/t/p/original" +
-						movie.backdrop_path,
+						serie.backdrop_path,
 				}}
 				style={styles.banner}
 			/>
-			<Text style={styles.title}>{movie.title}</Text>
-			<Text style={styles.date}>{movie.release_date}</Text>
+			<Text style={styles.title}>{serie.name}</Text>
+			<Text style={styles.date}>{serie.first_air_date}</Text>
 			<Text style={styles.rating}>
-				Note moyenne : {movie.vote_average}
+				Note moyenne : {serie.vote_average}
 			</Text>
 			<ScrollView>
-				<Text style={styles.overview}>{movie.overview}</Text>
+				<Text style={styles.overview}>{serie.overview}</Text>
 			</ScrollView>
 		</View>
 	)

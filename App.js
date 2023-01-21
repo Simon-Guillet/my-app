@@ -3,7 +3,8 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { HomeScreen } from "./src/components/HomeStack"
 import { DetailsScreen } from "./src/components/DetailStack"
-import { EpisodesScreen } from "./src/components/EpisodesStack"
+import { SeriesScreen } from "./src/components/SeriesStack"
+import { DetailsSeriesScreen } from "./src/components/DetailSeriesStack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
@@ -19,6 +20,18 @@ function HomeStackScreen() {
 	)
 }
 
+function SeriesStackScreen() {
+	return (
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
+			<Stack.Screen name="SeriesList" component={SeriesScreen} />
+			<Stack.Screen
+				name="DetailsSeries"
+				component={DetailsSeriesScreen}
+			/>
+		</Stack.Navigator>
+	)
+}
+
 function App() {
 	return (
 		<NavigationContainer>
@@ -29,7 +42,7 @@ function App() {
 
 						if (route.name === "Movies") {
 							iconName = focused ? "ios-film" : "ios-film-outline"
-						} else if (route.name === "Episodes") {
+						} else if (route.name === "Series") {
 							iconName = focused ? "ios-list" : "ios-list-outline"
 						}
 
@@ -47,7 +60,7 @@ function App() {
 				})}
 			>
 				<Tab.Screen name="Movies" component={HomeStackScreen} />
-				<Tab.Screen name="Episodes" component={EpisodesScreen} />
+				<Tab.Screen name="Series" component={SeriesStackScreen} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	)
