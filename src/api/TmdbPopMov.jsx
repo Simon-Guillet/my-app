@@ -22,7 +22,7 @@ export function getMovies(page = 1) {
 	}, [])
 
 	if (data.results !== undefined) {
-		console.log(data.results[0])
+		// console.log(data.results[0])
 	}
 	return data
 }

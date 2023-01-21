@@ -1,31 +1,62 @@
-import { Image, View, Text, FlatList, Pressable } from "react-native"
+import {
+	Image,
+	View,
+	Text,
+	FlatList,
+	Pressable,
+	StyleSheet,
+} from "react-native"
 import React, { useEffect, useState } from "react"
-// import { getCharacters } from "../api/BreakingBadCharacters"
-import { getMovies, fetchMore } from "../api/TmdbPopMov"
-import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { getMovies } from "../api/TmdbPopMov"
 
 export function HomeScreen({ navigation }) {
-	const data = getMovies()
+	const [list, setList] = useState([])
+	let data = getMovies()
+	let moreData = []
+	useEffect(() => {
+		setList(data.results)
+	})
+
+	const API_KEY = "9962de3c66111255c5b403573ceab203"
+
 	const fetchMore = () => {
 		console.log("fetching more")
+		console.log("page:", data.page)
+
+		const response = fetch(
+			`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${
+				data.page + 1
+			}`
+		)
+			.then((response) => response.json())
+			.then((json) => {
+				moreData = json
+				if (moreData.results !== undefined) {
+					// console.log("moreData:", moreData.results[0])
+
+					// console.log("list before:", list[0])
+					setList([...list, ...moreData.results])
+					console.log("list after:", list[list.length - 1].title)
+				}
+			})
+			.catch((error) => {
+				console.error(error)
+			})
 	}
 
 	return (
-		<View
-			style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-		>
+		<View style={styles.container}>
 			<FlatList
-				data={data.results}
+				data={list}
 				horizontal={false}
 				numColumns={2}
 				onEndReachedThreshold={0.5}
-				onEndReached={fetchMore()}
+				onEndReached={() => fetchMore()}
 				renderItem={({ item }) => (
 					<Pressable
-						style={{ margin: 5 }}
+						style={styles.card}
 						onPress={() => {
-							console.log(item)
+							// console.log(item)
 							navigation.navigate("Movies", {
 								screen: "Details",
 								params: { movie: item },
@@ -38,12 +69,10 @@ export function HomeScreen({ navigation }) {
 									"https://image.tmdb.org/t/p/w500" +
 									item.poster_path,
 							}}
-							style={{ width: 160, height: 240 }}
+							style={styles.image}
 						/>
-						<View style={{ flexDirection: "row" }}>
-							<Text style={{ flex: 1, flexWrap: "wrap" }}>
-								{item.title}
-							</Text>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>{item.title}</Text>
 						</View>
 					</Pressable>
 				)}
@@ -51,3 +80,25 @@ export function HomeScreen({ navigation }) {
 		</View>
 	)
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	card: {
+		margin: 5,
+	},
+	image: {
+		width: 160,
+		height: 240,
+	},
+	titleContainer: {
+		flexDirection: "row",
+	},
+	title: {
+		flex: 1,
+		flexWrap: "wrap",
+	},
+})
