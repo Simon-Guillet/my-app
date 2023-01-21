@@ -19,7 +19,7 @@ export function HomeScreen({ navigation }) {
 	useEffect(() => {
 		getMovies(page)
 			.then((data) => {
-				setList([...list, ...data.results])
+				setList((prevList) => [...prevList, ...data.results])
 				setLoading(false)
 			})
 			.catch((error) => {
@@ -36,9 +36,6 @@ export function HomeScreen({ navigation }) {
 	if (error) {
 		return <Text>An error has occurred</Text>
 	}
-	if (loading) {
-		return <ActivityIndicator size="large" />
-	}
 
 	return (
 		<View style={styles.container}>
@@ -46,7 +43,7 @@ export function HomeScreen({ navigation }) {
 				data={list}
 				horizontal={false}
 				numColumns={2}
-				onEndReachedThreshold={0.5}
+				onEndReachedThreshold={1}
 				onEndReached={() => fetchMore()}
 				renderItem={({ item }) => (
 					<Pressable
