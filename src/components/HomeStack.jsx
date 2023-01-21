@@ -5,43 +5,39 @@ import {
 	FlatList,
 	Pressable,
 	StyleSheet,
+	ActivityIndicator,
 } from "react-native"
 import React, { useEffect, useState } from "react"
 import { getMovies } from "../api/TmdbPopMov"
 
 export function HomeScreen({ navigation }) {
 	const [list, setList] = useState([])
-	let data = getMovies()
-	let moreData = []
+	const [page, setPage] = useState(1)
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(false)
+
 	useEffect(() => {
-		setList(data.results)
-	})
-
-	const API_KEY = "9962de3c66111255c5b403573ceab203"
-
-	const fetchMore = () => {
-		console.log("fetching more")
-		console.log("page:", data.page)
-
-		const response = fetch(
-			`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${
-				data.page + 1
-			}`
-		)
-			.then((response) => response.json())
-			.then((json) => {
-				moreData = json
-				if (moreData.results !== undefined) {
-					// console.log("moreData:", moreData.results[0])
-
-					// console.log("list before:", list[0])
-					setList([...list, ...moreData.results])
-					console.log("list after:", list[list.length - 1].title)
-				}
+		getMovies(page)
+			.then((data) => {
+				setList([...list, ...data.results])
+				setLoading(false)
 			})
 			.catch((error) => {
 				console.error(error)
+				setError(true)
 			})
+	}, [page])
+
+	const fetchMore = () => {
+		setLoading(true)
+		setPage(page + 1)
+	}
+
+	if (error) {
+		return <Text>An error has occurred</Text>
+	}
+	if (loading) {
+		return <ActivityIndicator size="large" />
 	}
 
 	return (
@@ -56,7 +52,6 @@ export function HomeScreen({ navigation }) {
 					<Pressable
 						style={styles.card}
 						onPress={() => {
-							// console.log(item)
 							navigation.navigate("Movies", {
 								screen: "Details",
 								params: { movie: item },
@@ -76,6 +71,10 @@ export function HomeScreen({ navigation }) {
 						</View>
 					</Pressable>
 				)}
+				ListFooterComponent={
+					loading ? <ActivityIndicator size="large" /> : null
+				}
+				keyExtractor={(item) => item.id.toString()}
 			/>
 		</View>
 	)
