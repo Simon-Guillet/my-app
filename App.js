@@ -13,20 +13,33 @@ const Tab = createBottomTabNavigator()
 
 function HomeStackScreen() {
 	return (
-		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="List" component={HomeScreen} />
-			<Stack.Screen name="Details" component={DetailsScreen} />
+		<Stack.Navigator>
+			<Stack.Screen
+				name="List"
+				component={HomeScreen}
+				options={{ title: "Les Films Populaires" }}
+			/>
+			<Stack.Screen
+				name="Details"
+				component={DetailsScreen}
+				options={{ title: "Détails du Film" }}
+			/>
 		</Stack.Navigator>
 	)
 }
 
 function SeriesStackScreen() {
 	return (
-		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="SeriesList" component={SeriesScreen} />
+		<Stack.Navigator>
+			<Stack.Screen
+				name="SeriesList"
+				component={SeriesScreen}
+				options={{ title: "Les Séries Populaires" }}
+			/>
 			<Stack.Screen
 				name="DetailsSeries"
 				component={DetailsSeriesScreen}
+				options={{ title: "Détails de la Série" }}
 			/>
 		</Stack.Navigator>
 	)
@@ -43,7 +56,7 @@ function App() {
 						if (route.name === "Movies") {
 							iconName = focused ? "ios-film" : "ios-film-outline"
 						} else if (route.name === "Series") {
-							iconName = focused ? "ios-list" : "ios-list-outline"
+							iconName = focused ? "ios-tv" : "ios-tv-outline"
 						}
 
 						// You can return any component that you like here!
@@ -57,6 +70,7 @@ function App() {
 					},
 					tabBarActiveTintColor: "tomato",
 					tabBarInactiveTintColor: "gray",
+					headerShown: false,
 				})}
 			>
 				<Tab.Screen name="Movies" component={HomeStackScreen} />
