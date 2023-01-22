@@ -5,6 +5,7 @@ import { HomeScreen } from "./src/components/HomeStack"
 import { DetailsScreen } from "./src/components/DetailStack"
 import { SeriesScreen } from "./src/components/SeriesStack"
 import { DetailsSeriesScreen } from "./src/components/DetailSeriesStack"
+import { FavoritesScreen } from "./src/components/FavoritesStack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
@@ -45,6 +46,18 @@ function SeriesStackScreen() {
 	)
 }
 
+function FavoritesStackScreen() {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name="FavoritesList"
+				component={FavoritesScreen}
+				options={{ title: "Mes Favoris" }}
+			/>
+		</Stack.Navigator>
+	)
+}
+
 function App() {
 	return (
 		<NavigationContainer>
@@ -57,6 +70,10 @@ function App() {
 							iconName = focused ? "ios-film" : "ios-film-outline"
 						} else if (route.name === "Series") {
 							iconName = focused ? "ios-tv" : "ios-tv-outline"
+						} else if (route.name === "Favorites") {
+							iconName = focused
+								? "ios-heart"
+								: "ios-heart-outline"
 						}
 
 						// You can return any component that you like here!
@@ -75,6 +92,7 @@ function App() {
 			>
 				<Tab.Screen name="Movies" component={HomeStackScreen} />
 				<Tab.Screen name="Series" component={SeriesStackScreen} />
+				<Tab.Screen name="Favorites" component={FavoritesStackScreen} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	)

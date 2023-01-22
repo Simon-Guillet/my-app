@@ -1,8 +1,29 @@
 import { Button, StyleSheet, Text, View, Image, ScrollView } from "react-native"
 import * as React from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export function DetailsScreen({ route, navigation }) {
 	const { movie } = route.params
+	const [isFavorite, setIsFavorite] = React.useState(false)
+
+	React.useEffect(() => {
+		AsyncStorage.getItem(movie.id.toString()).then((value) => {
+			if (value !== null) {
+				setIsFavorite(true)
+			}
+		})
+	}, [])
+
+	const toggleFavorite = () => {
+		if (isFavorite) {
+			AsyncStorage.removeItem(movie.id.toString())
+			setIsFavorite(false)
+		} else {
+			AsyncStorage.setItem(movie.id.toString(), JSON.stringify(movie))
+			setIsFavorite(true)
+		}
+	}
+
 	return (
 		<View style={styles.container}>
 			<Image
@@ -18,6 +39,13 @@ export function DetailsScreen({ route, navigation }) {
 			<Text style={styles.rating}>
 				Note moyenne : {movie.vote_average}
 			</Text>
+			<Button
+				title={
+					isFavorite ? "Supprimer des favoris" : "Ajouter aux favoris"
+				}
+				onPress={toggleFavorite}
+				color={isFavorite ? "tomato" : "blue"}
+			/>
 			<ScrollView>
 				<Text style={styles.overview}>{movie.overview}</Text>
 			</ScrollView>
