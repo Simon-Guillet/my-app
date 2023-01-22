@@ -26,7 +26,6 @@ export function DetailsSeriesScreen({ route, navigation }) {
 
 		getSimSeries(serie.id).then((data) => {
 			setSimSeries(data.results)
-			console.log(data.results)
 		})
 	}, [serie.id])
 
