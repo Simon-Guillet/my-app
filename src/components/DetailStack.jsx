@@ -55,7 +55,7 @@ export function DetailsScreen({ route, navigation }) {
 				<Text style={styles.rating}>
 					Note moyenne : {movie.vote_average}
 				</Text>
-				<View style={styles.button_wrapper}>
+				<View style={styles.buttonWrapper}>
 					<Button
 						title={
 							isFavorite
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		textAlign: "center",
 	},
-	button_wrapper: {
+	buttonWrapper: {
 		flexDirection: "row",
 		justifyContent: "center",
 	},
