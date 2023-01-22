@@ -90,9 +90,21 @@ function App() {
 					headerShown: false,
 				})}
 			>
-				<Tab.Screen name="Movies" component={HomeStackScreen} />
-				<Tab.Screen name="Series" component={SeriesStackScreen} />
-				<Tab.Screen name="Favorites" component={FavoritesStackScreen} />
+				<Tab.Screen
+					name="Movies"
+					component={HomeStackScreen}
+					options={{ title: "Les Films" }}
+				/>
+				<Tab.Screen
+					name="Series"
+					component={SeriesStackScreen}
+					options={{ title: "Les Séries" }}
+				/>
+				<Tab.Screen
+					name="Favorites"
+					component={FavoritesStackScreen}
+					options={{ title: "Vos Favoris" }}
+				/>
 			</Tab.Navigator>
 		</NavigationContainer>
 	)
