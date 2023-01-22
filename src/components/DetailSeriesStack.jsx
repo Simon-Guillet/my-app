@@ -44,7 +44,7 @@ export function DetailsSeriesScreen({ route, navigation }) {
 					isFavorite ? "Supprimer des favoris" : "Ajouter aux favoris"
 				}
 				onPress={toggleFavorite}
-				color={isFavorite ? "tomato" : "blue"}
+				color={isFavorite ? "gray" : "tomato"}
 			/>
 			<ScrollView>
 				<Text style={styles.overview}>{serie.overview}</Text>
