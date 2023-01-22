@@ -20,7 +20,6 @@ export function FavoritesScreen() {
 		const unsubscribe = navigation.addListener("focus", () => {
 			AsyncStorage.getAllKeys()
 				.then((keys) => {
-					console.log(keys)
 					return AsyncStorage.multiGet(keys)
 				})
 				.then((stores) => {
@@ -50,7 +49,22 @@ export function FavoritesScreen() {
 				horizontal={false}
 				numColumns={2}
 				renderItem={({ item }) => (
-					<View style={styles.card}>
+					<Pressable
+						style={styles.card}
+						onPress={() => {
+							if (item.title) {
+								navigation.navigate("Movies", {
+									screen: "Details",
+									params: { movie: item },
+								})
+							} else {
+								navigation.navigate("Series", {
+									screen: "DetailsSeries",
+									params: { serie: item },
+								})
+							}
+						}}
+					>
 						<Image
 							source={{
 								uri:
@@ -64,7 +78,7 @@ export function FavoritesScreen() {
 								{item.title ?? item.name}
 							</Text>
 						</View>
-					</View>
+					</Pressable>
 				)}
 				keyExtractor={(item) => item.id.toString()}
 			/>
