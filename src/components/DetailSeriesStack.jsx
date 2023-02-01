@@ -18,11 +18,13 @@ export function DetailsSeriesScreen({ route, navigation }) {
 	const [simSeries, setSimSeries] = React.useState([])
 
 	React.useEffect(() => {
-		AsyncStorage.getItem(serie.id.toString()).then((value) => {
-			if (value !== null) {
-				setIsFavorite(true)
+		AsyncStorage.getItem("favorite-" + serie.id.toString()).then(
+			(value) => {
+				if (value !== null) {
+					setIsFavorite(true)
+				}
 			}
-		})
+		)
 
 		getSimSeries(serie.id).then((data) => {
 			setSimSeries(data.results)
@@ -31,10 +33,13 @@ export function DetailsSeriesScreen({ route, navigation }) {
 
 	const toggleFavorite = () => {
 		if (isFavorite) {
-			AsyncStorage.removeItem(serie.id.toString())
+			AsyncStorage.removeItem("favorite-" + serie.id.toString())
 			setIsFavorite(false)
 		} else {
-			AsyncStorage.setItem(serie.id.toString(), JSON.stringify(serie))
+			AsyncStorage.setItem(
+				"favorite-" + serie.id.toString(),
+				JSON.stringify(serie)
+			)
 			setIsFavorite(true)
 		}
 	}

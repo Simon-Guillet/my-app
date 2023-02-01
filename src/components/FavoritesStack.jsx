@@ -20,6 +20,8 @@ export function FavoritesScreen() {
 		const unsubscribe = navigation.addListener("focus", () => {
 			AsyncStorage.getAllKeys()
 				.then((keys) => {
+					// filter keys that are not favorites
+					keys = keys.filter((key) => key.includes("favorite-"))
 					return AsyncStorage.multiGet(keys)
 				})
 				.then((stores) => {

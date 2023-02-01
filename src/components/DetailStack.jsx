@@ -18,11 +18,13 @@ export function DetailsScreen({ route, navigation }) {
 	const [simMovies, setSimMovies] = React.useState([])
 
 	React.useEffect(() => {
-		AsyncStorage.getItem(movie.id.toString()).then((value) => {
-			if (value !== null) {
-				setIsFavorite(true)
+		AsyncStorage.getItem("favorite-" + movie.id.toString()).then(
+			(value) => {
+				if (value !== null) {
+					setIsFavorite(true)
+				}
 			}
-		})
+		)
 
 		getSimMovies(movie.id).then((data) => {
 			setSimMovies(data.results)
@@ -31,10 +33,13 @@ export function DetailsScreen({ route, navigation }) {
 
 	const toggleFavorite = () => {
 		if (isFavorite) {
-			AsyncStorage.removeItem(movie.id.toString())
+			AsyncStorage.removeItem("favorite-" + movie.id.toString())
 			setIsFavorite(false)
 		} else {
-			AsyncStorage.setItem(movie.id.toString(), JSON.stringify(movie))
+			AsyncStorage.setItem(
+				"favorite-" + movie.id.toString(),
+				JSON.stringify(movie)
+			)
 			setIsFavorite(true)
 		}
 	}

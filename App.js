@@ -7,6 +7,7 @@ import { SeriesScreen } from "./src/components/SeriesStack"
 import { DetailsSeriesScreen } from "./src/components/DetailSeriesStack"
 import { FavoritesScreen } from "./src/components/FavoritesStack"
 import { SearchScreen } from "./src/components/SearchStack"
+import { ProfileScreen } from "./src/components/ProfileStack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
@@ -71,6 +72,18 @@ function SearchStackScreen() {
 	)
 }
 
+function ProfileStackScreen() {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name="ProfileList"
+				component={ProfileScreen}
+				options={{ title: "Votre Profil" }}
+			/>
+		</Stack.Navigator>
+	)
+}
+
 function App() {
 	return (
 		<NavigationContainer>
@@ -91,6 +104,10 @@ function App() {
 							iconName = focused
 								? "ios-search"
 								: "ios-search-outline"
+						} else if (route.name === "Profile") {
+							iconName = focused
+								? "ios-person"
+								: "ios-person-outline"
 						}
 
 						// You can return any component that you like here!
@@ -118,14 +135,19 @@ function App() {
 					options={{ title: "Les Séries" }}
 				/>
 				<Tab.Screen
+					name="Search"
+					component={SearchStackScreen}
+					options={{ title: "Rechercher" }}
+				/>
+				<Tab.Screen
 					name="Favorites"
 					component={FavoritesStackScreen}
 					options={{ title: "Vos Favoris" }}
 				/>
 				<Tab.Screen
-					name="Search"
-					component={SearchStackScreen}
-					options={{ title: "Rechercher" }}
+					name="Profile"
+					component={ProfileStackScreen}
+					options={{ title: "Votre Profil" }}
 				/>
 			</Tab.Navigator>
 		</NavigationContainer>
