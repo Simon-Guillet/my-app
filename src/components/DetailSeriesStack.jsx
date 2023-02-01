@@ -68,8 +68,9 @@ export function DetailsSeriesScreen({ route, navigation }) {
 				</View>
 
 				<Text style={styles.overview}>{serie.overview}</Text>
-				<Text style={styles.title}>Séries similaires</Text>
-
+				{simSeries.length > 0 && (
+					<Text style={styles.title}>Séries similaires</Text>
+				)}
 				<FlatList
 					data={simSeries}
 					keyExtractor={(item) => item.id.toString()}

@@ -18,8 +18,7 @@ export function SearchScreen({ navigation }) {
 	const [value, onChangeText] = React.useState("Test")
 
 	useEffect(() => {
-		// If the user does not enter at least one latin character, the search is not performed
-		if (!value.match(/[a-zA-Z0-9]/) || value.length < 3) {
+		if (!value.match(/[a-zA-Z0-9]/) || value.length < 2) {
 			return
 		}
 		searchMulti(value)
@@ -105,6 +104,7 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		height: 40,
+		width: "50%",
 		margin: 12,
 		borderWidth: 1,
 		padding: 10,

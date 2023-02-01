@@ -69,8 +69,9 @@ export function DetailsScreen({ route, navigation }) {
 				</View>
 
 				<Text style={styles.overview}>{movie.overview}</Text>
-				<Text style={styles.title}>Films similaires</Text>
-
+				{simMovies.length > 0 && (
+					<Text style={styles.title}>Films similaires</Text>
+				)}
 				<FlatList
 					data={simMovies}
 					keyExtractor={(item) => item.id.toString()}
