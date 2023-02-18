@@ -1,11 +1,21 @@
-import { Image, View, Text, StyleSheet, TextInput, Button } from "react-native"
+import {
+	Image,
+	View,
+	Text,
+	StyleSheet,
+	TextInput,
+	Button,
+	Platform,
+} from "react-native"
 import React, { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import * as ImagePicker from "expo-image-picker"
 
 export function ProfileScreen() {
 	const [error, setError] = useState(false)
-	const [user, setUser] = useState({})
+	const [user, setUser] = useState({ name: "", picture: "" })
 	const [value, setValue] = useState("")
+	const [image, setImage] = useState(null)
 
 	useEffect(() => {
 		AsyncStorage.getItem("user")
@@ -16,10 +26,6 @@ export function ProfileScreen() {
 						JSON.stringify({ name: "", picture: "" })
 					)
 				}
-				AsyncStorage.setItem(
-					"user",
-					JSON.stringify({ name: "", picture: "" })
-				)
 				setUser(JSON.parse(user))
 			})
 			.catch((error) => {
@@ -33,8 +39,31 @@ export function ProfileScreen() {
 	}
 
 	const handleSubmit = () => {
-		setUser({ ...user, name: value })
-		AsyncStorage.setItem("user", JSON.stringify(user))
+		setUser((prevState) => ({ ...prevState, name: value }))
+		AsyncStorage.setItem("user", JSON.stringify({ ...user, name: value }))
+	}
+
+	const pickImage = async () => {
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			allowsEditing: true,
+			aspect: [1, 1],
+			quality: 1,
+		})
+
+		console.log(result)
+
+		if (!result.canceled) {
+			setImage(result.assets[0].uri)
+			setUser((prevState) => ({
+				...prevState,
+				picture: result.assets[0].uri,
+			}))
+			AsyncStorage.setItem(
+				"user",
+				JSON.stringify({ ...user, picture: result.assets[0].uri })
+			)
+		}
 	}
 
 	if (error) {
@@ -55,9 +84,9 @@ export function ProfileScreen() {
 						}}
 					/>
 				)}
-				{user.name !== "" && (
-					<Text style={styles.text}>{user.name}</Text>
-				)}
+				<Button title="Choisir une image" onPress={pickImage} />
+
+				<Text style={styles.text}>Nom : {user.name}</Text>
 				<View style={styles.form}>
 					<TextInput
 						style={styles.input}
