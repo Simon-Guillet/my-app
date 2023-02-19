@@ -46,6 +46,11 @@ export function FavoritesScreen() {
 
 	return (
 		<View style={styles.container}>
+			{list.length === 0 && (
+				<Text style={{ marginTop: 20 }}>
+					Vous n'avez pas de favoris
+				</Text>
+			)}
 			<FlatList
 				data={list}
 				horizontal={false}

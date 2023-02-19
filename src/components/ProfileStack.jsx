@@ -23,10 +23,12 @@ export function ProfileScreen() {
 				if (user === null) {
 					AsyncStorage.setItem(
 						"user",
-						JSON.stringify({ name: "", picture: "" })
+						JSON.stringify({ name: "Inconnu", picture: "" })
 					)
+					setUser({ name: "Inconnu", picture: "" })
+				} else {
+					setUser(JSON.parse(user))
 				}
-				setUser(JSON.parse(user))
 			})
 			.catch((error) => {
 				console.error(error)
@@ -51,8 +53,6 @@ export function ProfileScreen() {
 			quality: 1,
 		})
 
-		console.log(result)
-
 		if (!result.canceled) {
 			setImage(result.assets[0].uri)
 			setUser((prevState) => ({
@@ -73,10 +73,13 @@ export function ProfileScreen() {
 	return (
 		<View style={styles.container}>
 			<View style={styles.card}>
-				{user.picture === "" && (
-					<Text style={styles.text}>No picture</Text>
+				{user && user.picture === "" && (
+					<Image
+						style={styles.image}
+						source={require("../../assets/default-user.jpg")}
+					/>
 				)}
-				{user.picture !== "" && (
+				{user && user.picture !== "" && (
 					<Image
 						style={styles.image}
 						source={{
@@ -86,7 +89,12 @@ export function ProfileScreen() {
 				)}
 				<Button title="Choisir une image" onPress={pickImage} />
 
-				<Text style={styles.text}>Nom : {user.name}</Text>
+				{user && user.name === "" && (
+					<Text style={styles.text}>Nom : Inconnu</Text>
+				)}
+				{user && user.name !== "" && (
+					<Text style={styles.text}>Nom : {user.name}</Text>
+				)}
 				<View style={styles.form}>
 					<TextInput
 						style={styles.input}

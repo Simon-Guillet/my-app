@@ -15,7 +15,7 @@ export function SearchScreen({ navigation }) {
 	const [list, setList] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
-	const [value, onChangeText] = React.useState("Test")
+	const [value, onChangeText] = React.useState("Breaking Bad")
 
 	useEffect(() => {
 		if (!value.match(/[a-zA-Z0-9]/) || value.length < 2) {
@@ -46,6 +46,7 @@ export function SearchScreen({ navigation }) {
 				onChangeText={(text) => onChangeText(text)}
 				value={value}
 			/>
+			{list.length === 0 && !loading ? <Text>Aucun résultat</Text> : null}
 			<FlatList
 				data={list}
 				horizontal={false}
