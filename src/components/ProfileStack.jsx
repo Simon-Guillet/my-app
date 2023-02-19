@@ -45,6 +45,14 @@ export function ProfileScreen() {
 		AsyncStorage.setItem("user", JSON.stringify({ ...user, name: value }))
 	}
 
+	const deleteAccount = () => {
+		setUser({ name: "Inconnu", picture: "" })
+		AsyncStorage.setItem(
+			"user",
+			JSON.stringify({ name: "Inconnu", picture: "" })
+		)
+	}
+
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -105,6 +113,13 @@ export function ProfileScreen() {
 					/>
 					<Button title="Enregistrer" onPress={handleSubmit} />
 				</View>
+				{user && (user.name !== "Inconnu" || user.picture !== "") ? (
+					<Button
+						title="Supprimer mon compte"
+						color="red"
+						onPress={deleteAccount}
+					/>
+				) : null}
 			</View>
 		</View>
 	)

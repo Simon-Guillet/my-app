@@ -15,10 +15,10 @@ export function SearchScreen({ navigation }) {
 	const [list, setList] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
-	const [value, onChangeText] = React.useState("Breaking Bad")
+	const [value, onChangeText] = React.useState("")
 
 	useEffect(() => {
-		if (!value.match(/[a-zA-Z0-9]/) || value.length < 2) {
+		if (!value.match(/[a-zA-Z0-9]/) || value.length < 1) {
 			return
 		}
 		searchMulti(value)
