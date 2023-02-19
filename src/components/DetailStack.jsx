@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	banner: {
-		width: 500,
+		width: "100%",
 		height: 280,
 	},
 	title: {
