@@ -1,31 +1,39 @@
 {
-	"expo": {
-		"name": "Films & Séries",
-		"slug": "films-series",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./assets/simon.png",
-		"userInterfaceStyle": "light",
-		"splash": {
-			"image": "./assets/simon.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/simon.png",
-				"backgroundColor": "#FFFFFF"
-			}
-		},
-		"web": {
-			"favicon": "./assets/simon.png"
-		}
-	}
+  "expo": {
+    "name": "Films & Séries",
+    "slug": "films-series",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/simon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/simon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/simon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.dreamer5959.filmsseries"
+    },
+    "web": {
+      "favicon": "./assets/simon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "78331766-2807-4cca-86e2-60856bbdac1b"
+      }
+    }
+  }
 }
